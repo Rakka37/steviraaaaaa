@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio Stevira Rachel Gabriella</title>
+  <style>
+    /* reset */
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    html,body{height:100%}
+    :root{
+      --bg1:#2b2933;        /* darker bg */
+      --bg2:#282733;
+      --panel:#3b3a5a;      /* panel behind sections */
+      --nav:#3c3a66;        /* navbar */
+      --accent:#f8c146;     /* yellow */
+      --muted:#cfcfe0;
+      --card:#333043;
+      --pill:#cfcfbf;
+    }
+
+    body{
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#eee;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      text-align:center;
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position:fixed;
+      top:0; left:0; right:0;
+      height:56px;
+      background:var(--nav);
+      display:flex;
+      align-items:center;
+      z-index:30;
+      box-shadow:0 3px 6px rgba(0,0,0,.45);
+      padding:6px 18px;
+    }
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted);
+      font-weight:700;
+      text-decoration:none;
+    }
+    .brand .mini{
+      width:36px;height:36px;border-radius:50%;
+      overflow:hidden;border:3px solid var(--accent);
+      display:inline-block;flex-shrink:0;background:#fff;
+    }
+    .brand img{width:100%;height:100%;object-fit:cover;display:block}
+    /* menu */
+    .menu{display:flex;gap:20px;align-items:center}
+    .menu a{color:var(--muted);text-decoration:none;padding:6px 8px;font-weight:500}
+    .menu a.active{
+      color:#fff;
+      position:relative;
+    }
+    .menu a.active::after{
+      content:"";
+      position:absolute;
+      left:12px; right:12px;
+      bottom:-10px;
+      height:4px;
+      background:var(--accent);
+      border-radius:4px;
+    }
+
+    /* MAIN AREA */
+    main{margin-top:64px;padding:28px 18px 70px;display:flex;justify-content:center}
+    .container{max-width:980px;width:100%}
+
+    /* PROFILE CIRCLE */
+    .profile-wrap{display:flex;flex-direction:column;align-items:center;gap:18px;margin-bottom:18px}
+    .profile-photo{
+      width:150px;height:150px;border-radius:50%;
+      padding:6px;background:linear-gradient(180deg,var(--accent),#f6d86c);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(0,0,0,.45);
+    }
+    .profile-photo img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:6px solid #fff;display:block}
+
+    /* biodata card */
+    .bio-card{
+      background:var(--card);
+      border-radius:12px;
+      padding:18px 22px;
+      margin:0 auto 20px;
+      width:80%;
+      min-width:260px;
+      color:#e8e8f0;
+      box-shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+    .bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+    .label-col{color:#cfd0eb;text-align:left;padding-left:10px;font-weight:600}
+    .value-col{color:#fff;text-align:left;padding-left:8px}
+    .bio-row{padding:6px 0;border-radius:6px}
+
+    /* Riwayat pendidikan section */
+    .edu-wrap{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+    }
+    .edu-card{
+      width:80%;
+      background:rgba(59,58,90,0.95);
+      border-radius:12px;
+      padding:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      color:#fff;
+    }
+    .edu-title{
+      font-weight:700;
+      margin-bottom:12px;
+      text-align:center;
+      background:transparent;
+      color:var(--muted);
+      padding:6px 10px;border-radius:8px;
+    }
+    .edu-list{display:flex;flex-direction:column;gap:10px;align-items:center}
+    .edu-item{
+      display:flex;align-items:center;gap:12px;
+      width:92%;
+      background:linear-gradient(180deg, #dfe0d7, #e5e3c6);
+      color:#222;
+      padding:10px 12px;border-radius:14px;
+      box-shadow:inset 0 -2px 0 rgba(0,0,0,.05);
+    }
+    .edu-icon{
+      width:36px;height:36px;border-radius:50%;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;font-size:18px;
+      background:rgba(0,0,0,.06);
+      border:2px solid rgba(0,0,0,.06);
+      overflow:hidden;
+    }
+    .edu-icon img{width:100%;height:100%;object-fit:cover;display:block}
+    .edu-text{flex:1;text-align:left;font-weight:600;font-size:.95rem}
+
+    /* yellow separator line above footer */
+    .sep{height:8px;background:var(--accent);box-shadow:0 2px 0 rgba(0,0,0,.06);margin-top:26px;border-radius:4px}
+
+    /* footer */
+    footer{
+      background:var(--nav);
+      color:#ddd;padding:18px 0 40px;
+      border-top:1px solid rgba(255,255,255,.04);
+      position:relative;
+    }
+    .socials{display:flex;gap:20px;justify-content:center;align-items:center;margin-top:12px}
+    .socials a{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:8px;background:transparent;border:0}
+    .socials img{width:36px;height:36px;display:block}
+    .copyright{color:#cfcfe0;margin-top:8px;font-size:13px}
+
+    /* small admin login left bottom */
+    .login-admin{position:fixed;left:6px;bottom:6px;background:rgba(0,0,0,.45);color:#d3d3d3;font-size:11px;padding:6px 8px;border-radius:8px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.45);z-index:40}
+    .login-admin:hover{color:#fff;background:rgba(0,0,0,.6)}
+
+    /* responsive */
+    @media(max-width:820px){
+      .bio-card,.edu-card{width:92%}
+      .profile-photo{width:140px;height:140px}
+    }
+    @media(max-width:620px){
+      .about-container{padding:12px}
+      .bio-grid{grid-template-columns:1fr}
+      .label-col{text-align:left}
+      .value-col{text-align:left}
+      .profile-photo{width:130px;height:130px}
+      .edu-item{width:100%}
+      .menu{display:none}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Stevira">
+        <span class="mini"><img src="stevira.jpg" alt="stevira"></span>
+        <span style="color:#fff">Stevira</span>
+      </a>
+
+      <div class="menu" id="menu-list">
+        <a href="index.html">Home</a>
+        <a href="biodata.html" class="active">Biodata</a>
+        <a href="project.html">Project</a>
+        <a href="certificate.html">Certificate</a>
+        <a href="sharing.html">Sharing</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <!-- PROFILE -->
+      <div class="profile-wrap">
+        <div class="profile-photo" aria-hidden="true">
+          <img src="stevira.jpg" alt="Stevira Rachel Gabriella">
+        </div>
+      </div>
+
+      <!-- BIODATA CARD -->
+      <div class="bio-card" role="region" aria-label="Biodata">
+        <div class="bio-grid">
+          <div class="label-col">
+            <div class="bio-row">Nama</div>
+            <div class="bio-row">Email</div>
+            <div class="bio-row">Telp</div>
+            <div class="bio-row">Instagram</div>
+            <div class="bio-row">Hobi</div>
+          </div>
+
+          <div class="value-col">
+            <div class="bio-row">: Stevira Rachel Gabriella</div>
+            <div class="bio-row">: steviragabriella@gmail.com</div>
+            <div class="bio-row">: 08883049119</div>
+            <div class="bio-row">: @stevirachel</div>
+            <div class="bio-row">: Memasak</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIWAYAT PENDIDIKAN -->
+      <div class="edu-wrap">
+        <div class="edu-card">
+          <div class="edu-title">Riwayat pendidikan</div>
+
+          <div class="edu-list">
+            <div class="edu-item">
+              <div class="edu-icon" aria-hidden="true">
+                <!-- gunakan sd.png (letakkan di folder sama dengan biodata.html) -->
+                <img src="sd.png" alt="SD" onerror="this.style.display='none'; this.parentElement.textContent='🏫'">
+              </div>
+              <div class="edu-text">SD Negeri 1 Lidah Kulon, Surabaya</div>
+            </div>
+
+            <div class="edu-item">
+              <div class="edu-icon" aria-hidden="true">
+                <img src="smp.png" alt="SMP" onerror="this.style.display='none'; this.parentElement.textContent='🏫'">
+              </div>
+              <div class="edu-text">SMP Negeri 28, Surabaya</div>
+            </div>
+
+            <div class="edu-item">
+              <div class="edu-icon" aria-hidden="true">
+                <img src="sma.png" alt="SMA" onerror="this.style.display='none'; this.parentElement.textContent='🏫'">
+              </div>
+              <div class="edu-text">SMA Negeri 1 Driyorejo, Gresik</div>
+            </div>
+
+            <div class="edu-item">
+              <div class="edu-icon" aria-hidden="true">
+                <img src="univ.png" alt="Universitas" onerror="this.style.display='none'; this.parentElement.textContent='🎓'">
+              </div>
+              <div class="edu-text">UPN "Veteran" Jawa Timur</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- yellow separator line -->
+  <div class="sep" aria-hidden="true"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="socials" role="navigation" aria-label="social links">
+      <a href="#" title="LinkedIn"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+      <a href="#" title="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="#" title="YouTube"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+      <a href="#" title="TikTok"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+      <a href="#" title="GitHub"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111425.png" alt="GitHub"></a>
+    </div>
+
+    <div class="copyright">© 2025 Stevira Rachel Gabriella | Portofolio UPNVJT</div>
+
+    <a class="login-admin" href="admin.html">Login Admin</a>
+  </footer>
+
+  <script>
+    // mobile menu toggle (only show/hide the nav links)
+    const menuIcon = document.getElementById('menu-icon');
+    const menuList = document.getElementById('menu-list');
+    if(menuIcon && menuList) menuIcon.addEventListener('click', ()=> menuList.classList.toggle('show'));
+  </script>
+</body>
+</html>

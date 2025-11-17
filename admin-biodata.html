@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin - Biodata</title>
+<style>
+  :root{
+    --bg:#f2e79a;
+    --panel:#3b3656;
+    --accent:#ffeb3b;
+    --card:#3c3763;
+    --thead:#342c4a;
+    --muted:#e8e8e8;
+    --sb-w:300px;
+    --maxw:1200px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    min-height:100vh;
+    color:#111;
+    display:flex;
+    justify-content:center;
+  }
+
+  .page{width:100%;max-width:var(--maxw);padding:18px}
+
+  /* SIDEBAR */
+  .sidebar{
+    background:var(--panel);
+    color:#fff;
+    padding:28px 22px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    border-radius:0 12px 12px 0;
+    width:var(--sb-w);
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+  }
+  .avatar{width:140px;height:140px;border-radius:50%;overflow:hidden;border:6px solid var(--accent)}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+
+  .user-short{margin-top:10px;font-weight:700}
+  .user-full{margin-top:12px;text-align:center;font-weight:600;padding-bottom:8px;border-bottom:3px solid var(--accent);width:100%}
+
+  nav ul{list-style:none;padding-left:10px;margin-top:18px}
+  nav li{padding:12px 8px;font-weight:700}
+  nav a{
+    color:#fff;
+    text-decoration:none;
+    display:inline-block;
+    padding:0;
+    position:relative;
+  }
+  nav a.active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:100%;
+    height:4px;
+    background:var(--accent);
+    border-radius:4px;
+  }
+
+  /* MAIN */
+  .main{padding-left:8px}
+
+  .title{font-size:1.5rem;font-weight:700}
+
+  /* TABLE CARD */
+  .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:860px}
+  thead th{
+    background:var(--thead);
+    color:#fff;
+    padding:14px;
+    border-bottom:4px solid rgba(0,0,0,.2);
+    text-align:left;
+  }
+  tbody td{background:var(--muted);padding:12px;border-top:1px solid #ccc}
+  tbody td:first-child{font-weight:700}
+  .edit-link{color:#156eff;font-weight:700;text-decoration:none}
+
+  /* EDIT FORM */
+  #editCard{display:none;max-width:480px;margin-left:auto;margin-right:40px}
+  form .row{margin-bottom:12px}
+  label{color:#fff;margin-bottom:6px;display:block}
+  input{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    background:#eee;
+    border:none;
+    font-size:0.95rem;
+  }
+  .btn-save{
+    background:var(--accent);
+    padding:10px 18px;
+    border:0;
+    font-weight:700;
+    border-radius:10px;
+    cursor:pointer;
+  }
+  .btn-wrap{text-align:center;margin-top:16px}
+
+  .hamburger{display:none;padding:8px;font-size:22px;background:none;border:0;color:#000;cursor:pointer}
+
+  /* RESPONSIVE */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:.2s}
+
+  @media(min-width:761px){
+    .sidebar{
+      position:fixed;left:0;top:0;height:100vh;
+    }
+    .page{margin-left:var(--sb-w)}
+  }
+
+  @media(max-width:760px){
+    .sidebar{
+      position:fixed;left:0;top:0;height:100vh;width:75vw;max-width:320px;
+      transform:translateX(-110%);
+      transition:.3s;
+      border-radius:0;
+    }
+    .sidebar.open{transform:translateX(0)}
+
+    .hamburger{display:block;margin-bottom:10px}
+    .page{margin-left:0;padding:16px}
+
+    #editCard{margin:0 auto;width:100%}
+    .card{padding:14px}
+    table{min-width:650px}
+
+    .overlay.show{display:block;opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="avatar"><img src="stevira.jpg"></div>
+    <div class="user-short" id="shortName">Stevira</div>
+    <div class="user-full" id="fullName">Stevira Rachel Gabriella</div>
+
+    <nav>
+      <ul>
+         <li><a href="admin-biodata.html" class="active" >Biodata</a></li>
+        <li><a href="admin-projects.html">Projects</a></li>
+        <li><a href="admin-certificates.html">Certificates</a></li>
+        <li><a href="admin-sharing.html">Sharing</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <button class="hamburger" id="hambMenu">☰</button>
+    <div class="title">Edit Data Diri</div>
+
+    <!-- VIEW MODE (TABEL) -->
+    <div class="card" id="tableCard">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Isi</th><th>Aksi</th></tr>
+          </thead>
+          <tbody id="biodataTable">
+            <tr><td>Nama</td><td id="tdNama">Stevira Rachel Gabriella</td><td><a class="edit-link" onclick="openEdit()">Edit Data</a></td></tr>
+            <tr><td>Telepon</td><td id="tdTelp">08883049119</td><td></td></tr>
+            <tr><td>Email</td><td id="tdEmail">steviragabriella@gmail.com</td><td></td></tr>
+            <tr><td>LinkedIn</td><td id="tdLinkedIn">linkedin.com/in/stevira</td><td></td></tr>
+            <tr><td>Instagram</td><td id="tdIG">@stevirachel</td><td></td></tr>
+            <tr><td>Youtube</td><td id="tdYT">LSMI UPN JATIM</td><td></td></tr>
+            <tr><td>GitHub</td><td id="tdGH">@SimmySim</td><td></td></tr>
+            <tr><td>TikTok</td><td id="tdTT">@LSMI UPN JATIM</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EDIT MODE -->
+    <div class="card" id="editCard">
+      <form id="editForm">
+
+        <div class="row">
+          <label>Nama</label>
+          <input id="fNama" type="text" value="Stevira Rachel Gabriella">
+        </div>
+
+        <div class="row">
+          <label>Telepon</label>
+          <input id="fTelp" type="text" value="08883049119">
+        </div>
+
+        <div class="row">
+          <label>Email</label>
+          <input id="fEmail" type="email" value="steviragabriella@gmail.com">
+        </div>
+
+        <div class="row">
+          <label>LinkedIn</label>
+          <input id="fLinkedIn" type="text" value="linkedin.com/in/stevira">
+        </div>
+
+        <div class="row">
+          <label>Instagram</label>
+          <input id="fIG" type="text" value="@stevirachel">
+        </div>
+
+        <div class="row">
+          <label>Youtube</label>
+          <input id="fYT" type="text" value="LSMI UPN JATIM">
+        </div>
+
+        <div class="row">
+          <label>GitHub</label>
+          <input id="fGH" type="text" value="@SimmySim">
+        </div>
+
+        <div class="btn-wrap">
+          <button type="submit" class="btn-save">Simpan Data</button>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+</div>
+
+<script>
+
+// OPEN EDIT MODE
+function openEdit(){
+  document.getElementById("tableCard").style.display = "none";
+  document.getElementById("editCard").style.display = "block";
+}
+
+// HAMBURGER
+const hamb = document.getElementById("hambMenu");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+
+hamb.onclick = () => {
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+};
+
+overlay.onclick = () => {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+};
+
+// SAVE EDIT
+document.getElementById("editForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // ambil nilai baru
+  const n = fNama.value;
+  const t = fTelp.value;
+  const em = fEmail.value;
+  const li = fLinkedIn.value;
+  const ig = fIG.value;
+  const yt = fYT.value;
+  const gh = fGH.value;
+
+  // update tabel
+  tdNama.textContent = n;
+  tdTelp.textContent = t;
+  tdEmail.textContent = em;
+  tdLinkedIn.textContent = li;
+  tdIG.textContent = ig;
+  tdYT.textContent = yt;
+  tdGH.textContent = gh;
+
+  // update sidebar
+  document.getElementById("shortName").textContent = n.split(" ")[0];
+  document.getElementById("fullName").textContent = n;
+
+  // kembali ke tabel
+  document.getElementById("editCard").style.display = "none";
+  document.getElementById("tableCard").style.display = "block";
+});
+</script>
+
+</body>
+</html>

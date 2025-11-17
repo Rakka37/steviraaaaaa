@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portofolio Stevira Rachel Gabriella</title>
+
+  <style>
+    /* --- singkat & jelas --- */
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    body{background:linear-gradient(135deg,#1b1d26,#2d2a35);color:#eee;text-align:center;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+
+    /* navbar */
+    .navbar{position:fixed;top:0;left:0;width:100%;background:rgba(66,66,151,.7);backdrop-filter:blur(8px);z-index:10}
+    .nav-container{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
+    .logo{display:flex;gap:10px;align-items:center;color:#f8c146;font-weight:750;font-size: 1.1em;}
+    .logo img{width:40px;height:40px;border-radius:50%;border:3px solid #f8c146;object-fit:cover;background:#fff}
+    .menu{display:flex;gap:25px;list-style:none}
+    .menu li a{font-weight:500}
+    .menu-icon{display:none;color:#f8c146;font-size:1.6rem;cursor:pointer}
+    @media(max-width:768px){.menu{display:none;position:absolute;top:60px;left:0;width:100%;flex-direction:column;background:rgba(25,25,35,.95);padding:18px 0}.menu.show{display:flex}.menu-icon{display:block}}
+
+    .menu a.active{position:relative;color:#fff}
+    .menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-8px; height:4px;background:#f8c146;border-radius:4px;}
+
+    /* certificate section (compact CSS) */
+    .about-section{background:#000;margin-top:60px;padding:80px 20px 60px;border-bottom:4px solid #f8c146}
+    .section-title{color:#f8c146;font-weight:800;font-size:2.1rem;margin-bottom:34px}
+    .cert-grid{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:34px;justify-content:center;padding:10px}
+    .cert-card{width:190px;background:#3b3b70;border-radius:6px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 15px rgba(0,0,0,.4);transition:transform .2s}
+    .cert-card:hover{transform:translateY(-6px)}
+    .cert-card img{width:100%;height:110px;object-fit:cover;background:#222}
+    .cert-title{padding:10px;background:#3b3b70;font-weight:600; font-size: .75rem;}
+    .cert-date{padding:6px 10px;background:#2d2a35;color:#cfcfd3;font-size:.88rem;text-align:left}
+    .cert-detail{margin-top:auto;background:#f8c146;padding:8px 0;color:#000000;display:block}
+    .cert-detail:hover{background:#ebe098;color:#000;font-weight:700}
+    @media(max-width:900px){.cert-card{width:160px}.cert-card img{height:95px}}
+    @media(max-width:420px){.cert-card{width:140px}.cert-card img{height:80px}.cert-title{font-size:.9rem}.cert-date{font-size:.75rem}}
+
+    /* footer & login */
+    footer{background:rgba(66,66,151,.7);padding:20px 0 30px;color:#aaa;position:relative;border-top:1px solid rgba(255,255,255,.1)}
+    .footer-social{margin-bottom:12px}
+    .footer-social a{margin:0 8px;display:inline-block}
+    .footer-social img{width:30px;height:30px;border-radius:8px;filter:brightness(.95)}
+    .login-admin{position:fixed;left:6px;bottom:8px;background:rgba(0,0,0,.45);color:#d3d3d3;font-size: 7px;padding:8px 10px;border-radius:8px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+    .login-admin:hover{color:#fff;background:rgba(0,0,0,.6)}
+    @media (max-width: 420px) {.login-admin { left: 8px; bottom: 8px; padding: 6px 8px; font-size: 13px; }}
+
+    /* modal (compact) */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:2000}
+    .modal-backdrop.show{display:flex}
+    .modal{width:100%;max-width:900px;background:#111;border-radius:10px;display:flex;gap:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+    .modal-left{flex:1;padding:12px;background:#000;display:flex;align-items:center;justify-content:center}
+    .modal-left img{max-width:100%;max-height:70vh;object-fit:contain}
+    .modal-right{flex:1;padding:18px;color:#eee;display:flex;flex-direction:column;justify-content:space-between}
+    .modal-title{color:#f8c146;font-weight:800;font-size:1.2rem;margin-bottom:8px;text-align:left}
+    .modal-desc,.modal-meta{color:#dcdcdc;text-align:left}
+    .modal-close{align-self:flex-end;padding:8px 12px;border-radius:8px;background:#f8c146;color:#000000;cursor:pointer}
+    .modal-close:hover{background:#ebe098;color:#000;font-weight:700}
+    @media(max-width:880px){.modal{flex-direction:column}.modal-left img{max-height:50vh}}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="stevira.jpg" alt="Stevira">
+        Stevira Rachel Gabriella
+      </div>
+
+      <span class="menu-icon" id="menu-icon">&#9776;</span>
+
+      <ul class="menu" id="menu-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="biodata.html">Biodata</a></li>
+        <li><a href="project.html">Project</a></li>
+        <li><a href="certificate.html" class="active">Certificate</a></li>
+        <li><a href="sharing.html">Sharing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CERTIFICATE SECTION -->
+  <section class="about-section" id="about">
+    <h1 class="section-title">Certificate</h1>
+
+    <div class="cert-grid" id="certGrid">
+      <div class="cert-card" data-img="ser1.png" data-title="Sertifikat Natal" data-date="15 Desember 2023">
+        <img src="ser1.png" alt="Sertifikat 1">
+        <div class="cert-title">Sertifikat Natal</div>
+       
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser2.png" data-title="Ketua Pelaksana" data-date="26-28 September 2023">
+        <img src="ser2.png" alt="Sertifikat 2">
+        <div class="cert-title">Ketua Pelaksana</div>
+       
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser3.png" data-title="Sekretaris Bendahara" data-date="30 Agustus 2025">
+        <img src="ser3.png" alt="Sertifikat 3">
+        <div class="cert-title">Sekretaris Bendahara</div>
+       
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser4.png" data-title="Anggota Divisi" data-date="25 April 2025">
+        <img src="ser4.png" alt="Sertifikat 4">
+        <div class="cert-title">Anggota Divisi</div>
+
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser5.png" data-title="Anggota Divisi Acara" data-date="19 April 2024">
+        <img src="ser5.png" alt="Sertifikat 5">
+        <div class="cert-title">Anggota Divisi Acara</div>
+       
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser6.png" data-title="Anggota Divisi Senior" data-date="27-29 September 2024">
+        <img src="ser6.png" alt="Sertifikat 6">
+        <div class="cert-title">Anggota Divisi Senior</div>
+       
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser7.png" data-title="Wakil Ketua Pelaksana" data-date="13 Desember 2024">
+        <img src="ser7.png" alt="Sertifikat 7">
+        <div class="cert-title">Wakil Ketua Pelaksana</div>
+      
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+
+      <div class="cert-card" data-img="ser8.png" data-title="Ketua Pelaksana" data-date="31 Agustus 2024">
+        <img src="ser8.png" alt="Sertifikat 8">
+        <div class="cert-title">Ketua Pelaksana</div>
+        <a class="cert-detail" href="#">Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-left">
+        <img id="modalImage" src="" alt="">
+      </div>
+      <div class="modal-right">
+        <div>
+          <div id="modalTitle" class="modal-title">Judul</div>
+          <div id="modalMeta" class="modal-meta">Tanggal</div>
+          <div id="modalDesc" class="modal-desc" style="margin-top:8px;color:#dcdcdc;font-size:.95rem;text-align:left"></div>
+        </div>
+        <div>
+          <a href="#" id="modalClose" class="modal-close">Close</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-social">
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111425.png" alt="GitHub"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+    </div>
+
+    <div>© 2025 Stevira Rachel Gabriella | Portofolio UPNVJT</div>
+
+    <a class="login-admin" href="admin.html">Login Admin</a>
+  </footer>
+
+  <script>
+    // mobile menu
+    const menuIcon = document.getElementById('menu-icon');
+    const menuList = document.getElementById('menu-list');
+    if (menuIcon && menuList) menuIcon.addEventListener('click', ()=> menuList.classList.toggle('show'));
+
+    // modal open/close (delegation)
+    const certGrid = document.getElementById('certGrid');
+    const backdrop = document.getElementById('modalBackdrop');
+    const modalImg = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalClose');
+
+    certGrid.addEventListener('click', function(e){
+      const btn = e.target.closest('.cert-detail');
+      if(!btn) return;
+      e.preventDefault();
+      const card = btn.closest('.cert-card');
+      const img = card.getAttribute('data-img') || card.querySelector('img').src;
+      const title = card.getAttribute('data-title') || card.querySelector('.cert-title').innerText;
+      const date = card.getAttribute('data-date') || card.querySelector('.cert-date').innerText;
+
+      modalImg.src = img;
+      modalTitle.textContent = title;
+      modalMeta.textContent = 'Tgl perolehan : ' + date.replace(/^Tgl perolehan :\s*/i,'');
+      modalDesc.textContent = ''; // kosong; bisa diisi jika mau
+
+      backdrop.classList.add('show');
+      backdrop.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeModal(){
+      backdrop.classList.remove('show');
+      backdrop.setAttribute('aria-hidden','true');
+      modalImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', function(e){ e.preventDefault(); closeModal(); });
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && backdrop.classList.contains('show')) closeModal(); });
+  </script>
+</body>
+</html>

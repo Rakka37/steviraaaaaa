@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects - Stevira Rachel Gabriella</title>
+  <style>
+    :root{
+      --bg1:#1b1d26; --bg2:#2d2a35; --accent:#f8c146; --accent2:#ffd66a;
+      --card:#3b3b70; --panel:#2d2a35;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    html,body{height:100%}
+    body{background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#eee;text-align:center;line-height:1.45}
+    a{color:inherit;text-decoration:none}
+
+    /* NAVBAR */
+    .navbar{position:fixed;top:0;left:0;width:100%;background:rgba(66,66,151,.7);backdrop-filter:blur(8px);box-shadow:0 3px 8px rgba(0,0,0,.4);z-index:50}
+    .nav-container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--accent);font-weight:700}
+    .logo img{width:40px;height:40px;border-radius:50%;border:3px solid var(--accent);object-fit:cover}
+    .menu{display:flex;gap:25px;list-style:none}
+    .menu li a{color:#eee;font-weight:500}
+    .menu-icon{display:none;color:var(--accent);font-size:1.8rem;cursor:pointer}
+    @media(max-width:768px){.menu{display:none;position:absolute;top:60px;left:0;width:100%;flex-direction:column;background:rgba(25,25,35,.95);padding:18px 0}.menu.show{display:flex}.menu-icon{display:block}}
+    .menu a.active{position:relative;color:#fff}
+    .menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:4px;background:var(--accent);border-radius:4px;}
+
+    /* SECTION */
+    .about-section{background:#000;margin-top:60px;padding:80px 16px 28px}
+    .section-title{color:var(--accent);font-weight:800;font-size:2.2rem;margin-bottom:34px}
+
+    /* GRID / CARDS */
+    .proj-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,190px);gap:34px;padding:10px;justify-content:center}
+    .proj-card{width:190px;background:var(--card);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 6px 20px rgba(0,0,0,.45);transition:transform .18s}
+    .proj-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.55)}
+    .proj-title{padding:14px 10px;background:var(--card);font-weight:800;color:#fff;text-align:center;min-height:60px;display:flex;align-items:center;justify-content:center;font-size:.75rem}
+    .proj-thumb{width:100%;height:110px;object-fit:cover;display:block;background:#222}
+    .proj-actions{margin-top:auto;background:var(--panel);padding:0}
+    .btn-details{display:block;width:100%;padding:12px;border:0;background:var(--accent);color:#000;font-weight:800;cursor:pointer;border-radius:0 0 6px 6px;transition:background .12s,transform .12s}
+    .btn-details:hover{background:var(--accent2);transform:translateY(-2px)}
+
+    /* MODAL */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:2000}
+    .modal-backdrop.show{display:flex}
+    .modal{width:100%;max-width:1100px;background:#111;border-radius:8px;overflow:hidden;display:flex;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+    .modal-left{flex:0 0 55%;background:#000;display:flex;align-items:center;justify-content:center;padding:6px}
+    .modal-left img{width:100%;height:auto;max-height:78vh;object-fit:contain}
+    .modal-right{flex:0 0 45%;background:var(--card);padding:28px 24px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-width:0}
+
+    /* new updated layout */
+    .modal-top{display:flex;gap:20px;align-items:flex-start;width:100%;text-align:left}
+    .duration-block{
+      flex:0 0 auto;
+      background:var(--accent);
+      color:#000;
+      border-radius:12px;
+      padding:10px 14px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(0,0,0,.25);
+      min-width:88px;
+    }
+    .duration-value{font-weight:900;font-size:1.05rem}
+    .duration-label{font-size:0.72rem;margin-top:6px;color:#111;font-weight:700}
+
+    .text-block{flex:1;text-align:left}
+    .modal-title{color:var(--accent);font-weight:800;font-size:1.45rem;margin-bottom:8px;text-align:left}
+
+    .modal-desc{
+      margin-top:10px;
+      color:#e6e6e6;
+      font-size:1rem;
+      text-align:left !important;
+      white-space:pre-wrap;
+      margin-bottom:12px;
+    }
+
+    .meta{color:#e6e6e6;font-size:1rem;text-align:left;margin-bottom:12px;word-break:break-word}
+    .meta b{color:#fff}
+    .modal-footer{display:flex;justify-content:center;width:100%;margin-top:6px}
+    .modal-close{background:var(--accent);color:#000;border:0;padding:10px 18px;border-radius:22px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(248,193,70,.12)}
+    .modal-close:hover{background:var(--accent2)}
+
+    .modal-right .content-wrap{overflow:auto;max-height:72vh;padding-right:6px}
+
+    /* separator + footer */
+    .section-sep{height:6px;background:var(--accent);width:100%;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+    footer{background:rgba(66,66,151,.7);padding:50px 0 30px;color:#aaa;border-top:1px solid rgba(255,255,255,.1);position:relative;overflow:visible}
+    .footer-social img{width:30px;height:30px;border-radius:8px;filter:brightness(.95);margin:0 8px}
+    .login-admin{position:fixed;left:6px;bottom:8px;background:rgba(0,0,0,.45);color:#d3d3d3;font-size: 7px;padding:8px 10px;border-radius:8px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+    .login-admin:hover{color:#fff;background:rgba(0,0,0,.6)}
+
+    /* responsive */
+    @media(max-width:900px){.proj-card{width:160px}.proj-thumb{height:95px}.proj-grid{grid-template-columns:repeat(auto-fit,160px)}}
+    @media(max-width:420px){.proj-card{width:140px}.proj-thumb{height:80px}.proj-grid{grid-template-columns:repeat(auto-fit,140px)}}
+    @media(max-width:980px){
+      .modal{flex-direction:column}
+      .modal-left{flex:auto}
+      .modal-right{flex:auto;padding:20px}
+      .modal-right .content-wrap{max-height:50vh}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="stevira.jpg" alt="Stevira">
+        Stevira Rachel Gabriella
+      </div>
+
+      <span class="menu-icon" id="menu-icon">&#9776;</span>
+
+      <ul class="menu" id="menu-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="biodata.html">Biodata</a></li>
+        <li><a href="project.html" class="active">Project</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+        <li><a href="sharing.html">Sharing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PROJECT SECTION -->
+  <section class="about-section" id="projects">
+    <h1 class="section-title">Projects</h1>
+
+    <div class="proj-grid" id="projGrid">
+
+      <!-- Card 1 -->
+      <article class="proj-card"
+               data-img="p1.jpg"
+               data-title="RUMAH HEMAT ENERGI"
+               data-desc="Rumah Hemat Energi dirancang dengan konsep modern yang memadukan teknologi ramah lingkungan dan efisiensi energi. Dilengkapi panel penghasil listrik, jendela besar untuk pencahayaan dan sirkulasi udara alami; mengurangi penggunaan energi buatan."
+               data-date="26 Desember 2023"
+               data-duration="2 Bulan"
+               data-doc="https://drive.google.com/file/d/10ML3wX23ZXZhYRntbyWNhDDPH4yEHT3p/view"
+               data-team="Individu">
+        <div class="proj-title">Rumah Hemat Energi</div>
+        <img class="proj-thumb" src="p1.jpg" alt="Rumah Hemat Energi">
+        <div class="proj-actions"><button class="btn-details">Details</button></div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="proj-card"
+               data-img="p2.jpg"
+               data-title="PEDULI LINGKUNGAN SEJAK DINI"
+               data-desc="Proyek relawan untuk mengajarkan anak mencintai alam melalui kegiatan fun game, menanam, dan merawat tanaman. Disertai dokumentasi kegiatan dan penguatan edukasi lingkungan."
+               data-date="28 Juni 2024"
+               data-duration="1 Bulan"
+               data-doc="https://drive.google.com/drive/folders/1bOhiNoiotSCCs5sRXhKlgfBOmn-r4Vil"
+               data-team="Tim">
+        <div class="proj-title">Peduli Lingkungan Sejak Dini</div>
+        <img class="proj-thumb" src="p2.jpg" alt="Peduli Lingkungan">
+        <div class="proj-actions"><button class="btn-details">Details</button></div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="proj-card"
+               data-img="p3.jpg"
+               data-title="DESAIN RUANG OLAHRAGA"
+               data-desc="Tugas perancangan ruang olahraga yang melatih ketelitian dan visualisasi desain teknik. Disajikan dokumentasi presentasi dan hasil desain 3D."
+               data-date="4 Desember 2023"
+               data-duration="3 Minggu"
+               data-doc="https://www.instagram.com/reel/COb4Vy-Sq5S/"
+               data-team="Tim">
+        <div class="proj-title">Desain Ruang Olahraga</div>
+        <img class="proj-thumb" src="p3.jpg" alt="Desain Ruang Olahraga">
+        <div class="proj-actions"><button class="btn-details">Details</button></div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="proj-card"
+               data-img="p4.jpg"
+               data-title="SOIL MOISTURE DETECTOR"
+               data-desc="Sistem penyiram tanaman otomatis berbasis Arduino Uno dengan sensor kelembaban tanah. Saat tanah kering sistem menyiram, berhenti ketika tanah basah, hemat waktu dan tenaga."
+               data-date="4 Mei 2024"
+               data-duration="1 Bulan"
+               data-doc="https://drive.google.com/file/d/1R4QAQlVH8Vmem-28nv9hT83vgGYEg3DO/view"
+               data-team="Tim">
+        <div class="proj-title">Soil Moisture Detector</div>
+        <img class="proj-thumb" src="p4.jpg" alt="Soil Moisture">
+        <div class="proj-actions"><button class="btn-details">Details</button></div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="proj-card"
+               data-img="p5.jpg"
+               data-title="PROJECT ANALISIS MENGGUNAKAN FLEXSIM"
+               data-desc="Analisis simulasi sistem diskrit menggunakan FlexSim untuk evaluasi antrian dan optimasi sumber daya. Dilengkapi dokumen desain dan hasil simulasi."
+               data-date="12 Maret 2025"
+               data-duration="2 Minggu"
+               data-doc="https://www.canva.com/design/..."
+               data-team="Individu">
+        <div class="proj-title">Project Analisis Menggunakan Flexsim</div>
+        <img class="proj-thumb" src="p5.jpg" alt="FlexSim">
+        <div class="proj-actions"><button class="btn-details">Details</button></div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- separator -->
+  <div class="section-sep"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-social">
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111425.png" alt="GitHub"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+    </div>
+
+    <div>© 2025 Stevira Rachel Gabriella | Portofolio UPNVJT</div>
+
+    <a class="login-admin" href="admin.html">Login Admin</a>
+  </footer>
+
+  <!-- MODAL -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+      <div class="modal-left">
+        <img id="modalImage" src="" alt="">
+      </div>
+
+      <div class="modal-right">
+        <div class="content-wrap">
+
+          <!-- TOP AREA -->
+          <div class="modal-top">
+            <div class="duration-block" id="modalDurationBlock" style="display:none">
+              <div class="duration-value" id="modalDurationValue"></div>
+              <div class="duration-label">durasi pengerjaan</div>
+            </div>
+
+            <div class="text-block">
+              <div id="modalTitle" class="modal-title"></div>
+            </div>
+          </div>
+
+          <!-- DESCRIPTION BELOW DURATION -->
+          <div id="modalDesc" class="modal-desc"></div>
+
+          <div id="modalDate" class="meta"><b>Tanggal :</b> -</div>
+          <div id="modalDoc" class="meta"><b>Dokumentasi :</b> <a id="modalDocLink" href="#" target="_blank" rel="noopener noreferrer"></a></div>
+          <div id="modalTeam" class="meta"><b>Pengerjaan :</b> -</div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="modalClose" class="modal-close" aria-label="Tutup modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // mobile menu toggle (safe guard if element missing)
+    const menuIcon = document.getElementById('menu-icon');
+    const menuList = document.getElementById('menu-list');
+    if(menuIcon && menuList) menuIcon.addEventListener('click', ()=> menuList.classList.toggle('show'));
+
+    // modal delegation
+    const projGrid = document.getElementById('projGrid');
+    const backdrop = document.getElementById('modalBackdrop');
+    const modalImg = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalDate = document.getElementById('modalDate');
+    const modalDocLink = document.getElementById('modalDocLink');
+    const modalTeam = document.getElementById('modalTeam');
+    const modalDurationBlock = document.getElementById('modalDurationBlock');
+    const modalDurationValue = document.getElementById('modalDurationValue');
+    const modalClose = document.getElementById('modalClose');
+
+    projGrid.addEventListener('click', function(e){
+      const btn = e.target.closest('.btn-details');
+      if(!btn) return;
+      const card = btn.closest('.proj-card');
+      if(!card) return;
+
+      const img = card.getAttribute('data-img') || (card.querySelector('img') && card.querySelector('img').src) || '';
+      const title = card.getAttribute('data-title') || card.querySelector('.proj-title').innerText || '';
+      const desc = card.getAttribute('data-desc') || '';
+      const date = card.getAttribute('data-date') || '-';
+      const doc = card.getAttribute('data-doc') || '';
+      const team = card.getAttribute('data-team') || '-';
+      const duration = card.getAttribute('data-duration') || '';
+
+      modalImg.src = img;
+      modalImg.alt = title;
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      modalDate.innerHTML = '<b>Tanggal :</b> ' + date;
+      if(doc){
+        modalDocLink.href = doc;
+        modalDocLink.textContent = doc;
+      } else {
+        modalDocLink.href = '#';
+        modalDocLink.textContent = '-';
+      }
+      modalTeam.innerHTML = '<b>Pengerjaan :</b> ' + team;
+
+      if(duration){
+        modalDurationBlock.style.display = 'flex';
+        modalDurationValue.textContent = duration;
+      } else {
+        modalDurationBlock.style.display = 'none';
+        modalDurationValue.textContent = '';
+      }
+
+      backdrop.classList.add('show');
+      backdrop.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeModal(){
+      backdrop.classList.remove('show');
+      backdrop.setAttribute('aria-hidden','true');
+      modalImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
+    backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && backdrop.classList.contains('show')) closeModal(); });
+  </script>
+
+</body>
+</html>
